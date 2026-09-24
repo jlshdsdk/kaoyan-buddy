@@ -1,4 +1,4 @@
-/* 原创角色沈晚。同一张脸，30 套衣服按日期轮换。胸更大，腰和腿保持细。 */
+/* 原创角色沈晚。同一张脸，50 套衣服按日期轮换。胸更大，腰和腿保持细。 */
 const OUTFITS = [
   { name: "深灰高领，黑风衣", file: "outfit-01.png" },
   { name: "白衬衫，墨蓝背心裙", file: "outfit-02.png" },
@@ -29,7 +29,27 @@ const OUTFITS = [
   { name: "深青针织，黑裙", file: "outfit-27.png" },
   { name: "卡其衬衫，炭灰马甲", file: "outfit-28.png" },
   { name: "银灰高领毛衣", file: "outfit-29.png" },
-  { name: "墨蓝长风衣，白衬衫", file: "outfit-30.png" }
+  { name: "墨蓝长风衣，白衬衫", file: "outfit-30.png" },
+  { name: "黑色比基尼", file: "outfit-31.png" },
+  { name: "白色比基尼", file: "outfit-32.png" },
+  { name: "藏蓝连体泳衣", file: "outfit-33.png" },
+  { name: "红色比基尼", file: "outfit-34.png" },
+  { name: "黑色连体泳衣", file: "outfit-35.png" },
+  { name: "碎花比基尼", file: "outfit-36.png" },
+  { name: "墨绿比基尼", file: "outfit-37.png" },
+  { name: "黑比基尼，白罩衫", file: "outfit-38.png" },
+  { name: "条纹连体泳衣", file: "outfit-39.png" },
+  { name: "雾蓝比基尼", file: "outfit-40.png" },
+  { name: "黑吊带，牛仔短裤", file: "outfit-41.png" },
+  { name: "黑色吊带裙", file: "outfit-42.png" },
+  { name: "米色吊带，短裙", file: "outfit-43.png" },
+  { name: "运动背心，黑短裤", file: "outfit-44.png" },
+  { name: "奶油衬衫，黑裙", file: "outfit-45.png" },
+  { name: "亚麻衬衫裙", file: "outfit-46.png" },
+  { name: "黑背心，白短裤", file: "outfit-47.png" },
+  { name: "灰上衣，黑打底裤", file: "outfit-48.png" },
+  { name: "浅粉吊带裙", file: "outfit-49.png" },
+  { name: "黑色挂脖裙", file: "outfit-50.png" }
 ];
 
 function outfitForDate(dateStr) {
