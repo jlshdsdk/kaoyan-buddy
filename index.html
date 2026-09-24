@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>沈晚 · 考研搭子</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    color: #241f1a;
+    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    background:
+      radial-gradient(900px 420px at 18% -10%, #f7f1e6 0%, rgba(247, 241, 230, 0) 70%),
+      #e7e0d4;
+  }
+  .app {
+    height: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 18px;
+    padding: 18px;
+  }
+  .side, .chat {
+    background: rgba(255, 252, 247, 0.88);
+    border: 1px solid #e0d6c6;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(60, 42, 24, 0.06);
+  }
+  .side { padding: 16px 16px 18px; display: flex; flex-direction: column; min-height: 0; }
+  .who { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  h1 { margin: 0; font-size: 28px; letter-spacing: 0.08em; font-weight: 700; }
+  .role { color: #8a8176; font-size: 13px; }
+  .portrait {
+    margin-top: 12px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #efe8dc;
+    line-height: 0;
+  }
+  .portrait img, .portrait svg { width: 100%; height: auto; display: block; }
+  .outfit { margin: 10px 0 0; color: #6f675e; font-size: 13px; }
+  .facts { margin-top: 14px; display: grid; gap: 10px; }
+  .fact label { display: block; font-size: 12px; color: #8a8176; margin-bottom: 4px; }
+  textarea.fact-box, .composer textarea {
+    width: 100%;
+    border: 1px solid #e3d9cb;
+    background: #fff;
+    color: #241f1a;
+    border-radius: 10px;
+    padding: 8px 10px;
+    font: inherit;
+    resize: vertical;
+    outline: none;
+  }
+  textarea.fact-box { min-height: 52px; }
+  textarea.fact-box:focus, .composer textarea:focus { border-color: #8d6b4a; }
+  .chat { display: flex; flex-direction: column; min-height: 0; min-width: 0; }
+  .log { flex: 1; overflow: auto; padding: 18px 18px 8px; display: flex; flex-direction: column; gap: 12px; }
+  .bubble { max-width: 78%; padding: 10px 12px; border-radius: 14px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+  .bubble.her { background: #f3ece2; border: 1px solid #eadfD0; align-self: flex-start; }
+  .bubble.me { background: #2c3848; color: #f7f4ef; align-self: flex-end; }
+  .hint { color: #8a8176; font-size: 13px; padding: 0 18px 8px; min-height: 1.2em; }
+  .composer { display: flex; gap: 8px; padding: 0 14px 14px; align-items: flex-end; }
+  .composer textarea { min-height: 52px; max-height: 140px; }
+  button {
+    border: 0;
+    background: #2c3848;
+    color: #f7f4ef;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font: inherit;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.55; cursor: default; }
+  #gear { background: #efe8dc; color: #241f1a; }
+  .settings { display: grid; gap: 8px; padding: 0 14px 14px; }
+  .settings label { font-size: 12px; color: #8a8176; }
+  .settings input { width: 100%; border: 1px solid #e3d9cb; border-radius: 10px; padding: 8px 10px; font: inherit; }
+  .file-warn { margin: 12px 0 0; color: #8a4b32; font-size: 13px; }
+  @media (max-width: 800px) {
+    .app { grid-template-columns: 1fr; height: auto; min-height: 100%; }
+    .portrait { max-height: 220px; }
+    .portrait img { width: 100%; height: 220px; object-fit: cover; object-position: center top; }
+    .chat { min-height: 70vh; }
+    .composer { position: sticky; bottom: 0; background: rgba(255, 252, 247, 0.96); }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="who">
+      <h1>沈晚</h1>
+      <div class="role">考研搭子</div>
+    </div>
+    <div class="portrait" id="portrait"></div>
+    <p class="outfit" id="outfit"></p>
+    <div class="facts">
+      <div class="fact">
+        <label for="plan">今日安排</label>
+        <textarea id="plan" class="fact-box" placeholder="还没说"></textarea>
+      </div>
+      <div class="fact">
+        <label for="progress">今日进度</label>
+        <textarea id="progress" class="fact-box" placeholder="还没说"></textarea>
+      </div>
+    </div>
+    <p class="file-warn" id="fileWarn" hidden>这页要由本机服务打开，直接双击文件的话她连不上模型。</p>
+  </aside>
+  <main class="chat">
+    <div class="log" id="log" aria-live="polite"></div>
+    <div class="hint" id="hint"></div>
+    <form class="composer" id="form">
+      <textarea id="input" rows="2" placeholder="跟她说今天学什么，或者学到哪了" aria-label="对沈晚说"></textarea>
+      <button type="submit" id="send">发送</button>
+      <button type="button" id="gear">设置</button>
+    </form>
+    <div class="settings" id="settings" hidden>
+      <label for="apiKey">模型密钥（只存在这台浏览器）</label>
+      <input id="apiKey" type="password" autocomplete="off" placeholder="在别的设备上聊天时填写">
+      <button type="button" id="saveKey">保存</button>
+    </div>
+  </main>
+</div>
+<script src="portrait.js"></script>
+<script>
+const STORE = "shenwan-buddy-v1";
+const KEY_STORE = "shenwan-api-v1";
+const LOCAL = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+const PLAN_LINE = "来了？行。今天打算学什么，说具体点。我又不是猜谜的。";
+const PROGRESS_LINE = "……十点了。今天的进度呢。别跟我说「还行」。";
+
+const $ = (id) => document.getElementById(id);
+const params = new URLSearchParams(location.search);
+
+function pad(n) { return String(n).padStart(2, "0"); }
+function todayKey() {
+  const override = params.get("date");
+  if (/^\d{4}-\d{2}-\d{2}$/.test(override || "")) return override;
+  const now = new Date();
+  return now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
+}
+function isNight() {
+  if (params.get("checkin") === "night") return true;
+  return new Date().getHours() >= 22;
+}
+function loadStore() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORE));
+    if (data && data.days) return data;
+  } catch (e) {}
+  return { days: {} };
+}
+function blankDay() {
+  return { plan: "", progress: "", messages: [], askedPlan: false, askedProgress: false };
+}
+function readDay() {
+  const data = loadStore();
+  const key = todayKey();
+  if (!data.days[key]) data.days[key] = blankDay();
+  return { data, key, rec: data.days[key] };
+}
+function writeDay(data) {
+  localStorage.setItem(STORE, JSON.stringify(data));
+}
+
+function renderPortrait() {
+  const picked = outfitForDate(todayKey());
+  const img = document.createElement("img");
+  img.alt = "沈晚，" + picked.outfit.name;
+  img.src = "assets/" + picked.outfit.file;
+  $("portrait").replaceChildren(img);
+  $("outfit").textContent = "今天穿" + picked.outfit.name;
+}
+
+function renderFacts() {
+  const rec = readDay().rec;
+  if (document.activeElement !== $("plan")) $("plan").value = rec.plan;
+  if (document.activeElement !== $("progress")) $("progress").value = rec.progress;
+}
+
+function renderLog() {
+  const log = $("log");
+  const atBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 40;
+  log.replaceChildren();
+  readDay().rec.messages.forEach((msg) => {
+    const div = document.createElement("div");
+    div.className = "bubble " + (msg.role === "user" ? "me" : "her");
+    div.textContent = msg.content;
+    log.appendChild(div);
+  });
+  if (atBottom || log.childElementCount) log.scrollTop = log.scrollHeight;
+}
+
+function setHint(text) { $("hint").textContent = text || ""; }
+
+function ensureQuestion() {
+  const { data, rec } = readDay();
+  const night = isNight();
+  let line = "";
+  if (night && !rec.progress && !rec.askedProgress) {
+    line = PROGRESS_LINE;
+    rec.askedProgress = true;
+  } else if (!night && !rec.plan && !rec.askedPlan) {
+    line = PLAN_LINE;
+    rec.askedPlan = true;
+  }
+  if (!line) return false;
+  rec.messages.push({ role: "assistant", content: line });
+  writeDay(data);
+  return true;
+}
+
+function savedKey() {
+  try { return localStorage.getItem(KEY_STORE) || ""; } catch (e) { return ""; }
+}
+
+async function checkHealth() {
+  if (location.protocol === "file:") {
+    $("fileWarn").hidden = false;
+    setHint("模型还没接上。安排和进度我先记在这台电脑上。");
+    return;
+  }
+  if (!LOCAL) {
+    setHint(savedKey() ? "" : "这台设备还没填密钥。点设置保存后就能聊天。");
+    return;
+  }
+  try {
+    const res = await fetch("/api/health");
+    const data = await res.json();
+    if (!data.ok) setHint("模型还没接上。安排和进度我先记在这台电脑上。");
+    else setHint("");
+  } catch (e) {
+    setHint(savedKey() ? "" : "模型还没接上。可以点设置，把密钥保存在这台浏览器。");
+  }
+}
+
+function systemPrompt(ctx) {
+  const plan = (ctx.plan || "").trim() || "还没说";
+  const progress = (ctx.progress || "").trim() || "还没说";
+  return "你是沈晚，用户的考研搭子，女。你不是任何作品里的角色，不提海贼王，不自称罗宾。\n"
+    + "说话短，一般两到四句。先接话，再给一个具体的下一步，比如科目、时长或题量。不要用「首先、其次、最后」，不要长清单，不要表情符号。\n"
+    + "傲娇：不承认自己在等他，可以说「谁要管你」，但该问的还是问清楚。\n"
+    + "腹黑要轻：进度如果对不上今天的安排，就点出没做的那一项，用他自己写过的说法，不骂人。\n"
+    + "黏：他答得太短，就再追问一个具体问题。\n"
+    + "外冷内热：收尾可以硬一点，比如「写完再来」。不要撒娇。\n"
+    + "不替他写论文，不替他把题目完整答出来。可以帮他把剩下的时间拆小。\n"
+    + "他没说过的进度不要编。\n\n"
+    + "现在的本地时间：" + ctx.now + "\n"
+    + "是否已到晚上检查进度的时段：" + (ctx.night ? "是" : "否") + "\n"
+    + "今天的安排：" + plan + "\n"
+    + "今天的进度：" + progress + "\n"
+    + "今天的衣服：" + (ctx.outfit || "未定") + "\n";
+}
+
+async function askModel(ctx, messages) {
+  const key = savedKey();
+  if (!key) throw new Error("先点设置，把模型密钥保存在这台浏览器");
+  const res = await fetch("https://open.bigmodel.cn/api/anthropic/v1/messages", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-api-key": key,
+      "anthropic-version": "2023-06-01"
+    },
+    body: JSON.stringify({
+      model: "GLM-5.3-Flash",
+      max_tokens: 600,
+      temperature: 0.7,
+      system: systemPrompt(ctx),
+      messages: messages.filter((msg) => msg.role === "user" || msg.role === "assistant").slice(-40)
+    })
+  });
+  const data = await res.json();
+  const text = (data.content || []).filter((block) => block.type === "text").map((block) => block.text).join("\n").trim();
+  if (!res.ok || !text) throw new Error((data.error && (data.error.message || data.error)) || "她没接上");
+  return text;
+}
+
+function captureField(id, field) {
+  const { data, rec } = readDay();
+  rec[field] = $(id).value.trim();
+  writeDay(data);
+}
+
+async function sendText(text) {
+  const { data, rec } = readDay();
+  if (!rec.progress && isNight()) rec.progress = text;
+  else if (!rec.plan && !isNight()) rec.plan = text;
+  rec.messages.push({ role: "user", content: text });
+  writeDay(data);
+  renderFacts();
+  renderLog();
+  $("send").disabled = true;
+  setHint("她在想怎么回……");
+  try {
+    const fresh = readDay().rec;
+    const picked = outfitForDate(todayKey());
+    const context = {
+      now: new Date().toLocaleString("zh-CN", { hour12: false }),
+      night: isNight(),
+      plan: fresh.plan,
+      progress: fresh.progress,
+      outfit: picked.outfit.name
+    };
+    let reply = "";
+    if (LOCAL) {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ context, messages: fresh.messages })
+      });
+      const body = await res.json();
+      if (!res.ok || !body.text) throw new Error(body.error || "她没接上");
+      reply = body.text;
+    } else {
+      reply = await askModel(context, fresh.messages);
+    }
+    const saved = readDay();
+    saved.rec.messages.push({ role: "assistant", content: reply });
+    writeDay(saved.data);
+    setHint("");
+  } catch (err) {
+    setHint(err.message || "她这会儿没接上");
+  } finally {
+    $("send").disabled = false;
+    renderLog();
+    $("input").focus();
+  }
+}
+
+$("gear").addEventListener("click", () => {
+  $("settings").hidden = !$("settings").hidden;
+  if (!$("settings").hidden) $("apiKey").value = savedKey();
+});
+$("saveKey").addEventListener("click", () => {
+  const key = $("apiKey").value.trim();
+  if (key) localStorage.setItem(KEY_STORE, key);
+  else localStorage.removeItem(KEY_STORE);
+  $("settings").hidden = true;
+  setHint(key ? "密钥已保存在这台浏览器。" : "这台浏览器的密钥已清掉。");
+});
+$("plan").addEventListener("change", () => captureField("plan", "plan"));
+$("progress").addEventListener("change", () => captureField("progress", "progress"));
+$("form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const text = $("input").value.trim();
+  if (!text) return;
+  $("input").value = "";
+  sendText(text);
+});
+$("input").addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    $("form").requestSubmit();
+  }
+});
+
+renderPortrait();
+ensureQuestion();
+renderFacts();
+renderLog();
+checkHealth();
+setInterval(() => { if (ensureQuestion()) renderLog(); }, 30000);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && ensureQuestion()) renderLog();
+});
+</script>
+</body>
+</html>

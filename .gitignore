@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.server.log
+buddy.log
+接手说明.md
