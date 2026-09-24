@@ -102,12 +102,31 @@ const OUTFITS = [
   { name: "黑色深V晚礼服", file: "outfit-100.png" }
 ];
 
-function outfitForDate(dateStr) {
-  if (dateStr === "2026-09-24") {
-    return { index: 30, outfit: OUTFITS[30] };
-  }
+function outfitForDate(dateStr, style) {
+  const pool = style === "sexy" ? SEXY : style === "maid" ? MAID : style === "bodysuit" ? BODY : CAMPUS;
   const parts = dateStr.split("-").map(Number);
   const days = Math.floor(Date.UTC(parts[0], parts[1] - 1, parts[2]) / 86400000);
-  const index = ((days % OUTFITS.length) + OUTFITS.length) % OUTFITS.length;
-  return { index, outfit: OUTFITS[index] };
+  const index = ((days % pool.length) + pool.length) % pool.length;
+  return { index, outfit: pool[index] };
 }
+
+const CAMPUS = OUTFITS.slice(0, 30).concat([
+  { name: "白衬衫，藏青背心，灰褶裙", file: "campus-01.png" },
+  { name: "奶油开衫，海军褶裙", file: "campus-02.png" },
+  { name: "浅蓝衬衫，卡其裤", file: "campus-03.png" }
+]);
+const SEXY = OUTFITS.slice(30).concat([
+  { name: "红色露肩短裙", file: "sexy-01.png" },
+  { name: "黑色开叉短裙", file: "sexy-02.png" },
+  { name: "黑色比基尼", file: "sexy-03.png" }
+]);
+const MAID = [
+  { name: "黑色女仆裙", file: "maid-01.png" },
+  { name: "黑裙白围裙", file: "maid-02.png" },
+  { name: "暗红女仆裙", file: "maid-03.png" }
+];
+const BODY = [
+  { name: "黑色长袖紧身衣", file: "bodysuit-01.png" },
+  { name: "白色长袖紧身衣", file: "bodysuit-02.png" },
+  { name: "黑色无袖紧身衣", file: "bodysuit-03.png" }
+];

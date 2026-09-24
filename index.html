@@ -75,7 +75,7 @@
     cursor: pointer;
   }
   button:disabled { opacity: 0.55; cursor: default; }
-  #gear { background: #efe8dc; color: #241f1a; }
+  #nextStyle { width: 100%; margin-top: 10px; background: #efe8dc; color: #241f1a; }
   .settings { display: grid; gap: 8px; padding: 0 14px 14px; }
   .settings label { font-size: 12px; color: #8a8176; }
   .settings input { width: 100%; border: 1px solid #e3d9cb; border-radius: 10px; padding: 8px 10px; font: inherit; }
@@ -98,6 +98,7 @@
     </div>
     <div class="portrait" id="portrait"></div>
     <p class="outfit" id="outfit"></p>
+    <button type="button" id="nextStyle">换一种风格</button>
     <div class="facts">
       <div class="fact">
         <label for="plan">今日安排</label>
@@ -167,8 +168,13 @@ function writeDay(data) {
   localStorage.setItem(STORE, JSON.stringify(data));
 }
 
+const STYLES = ["campus", "sexy", "maid", "bodysuit"];
+function currentStyle() {
+  const rec = readDay().rec;
+  return STYLES.indexOf(rec.style) >= 0 ? rec.style : "campus";
+}
 function renderPortrait() {
-  const picked = outfitForDate(todayKey());
+  const picked = outfitForDate(todayKey(), currentStyle());
   const img = document.createElement("img");
   img.alt = "沈晚，" + picked.outfit.name;
   img.src = "assets/" + picked.outfit.file;
@@ -297,7 +303,7 @@ async function sendText(text) {
   setHint("她在想怎么回……");
   try {
     const fresh = readDay().rec;
-    const picked = outfitForDate(todayKey());
+    const picked = outfitForDate(todayKey(), currentStyle());
     const context = {
       now: new Date().toLocaleString("zh-CN", { hour12: false }),
       night: isNight(),
@@ -331,6 +337,13 @@ async function sendText(text) {
   }
 }
 
+$("nextStyle").addEventListener("click", () => {
+  const { data, rec } = readDay();
+  const i = STYLES.indexOf(currentStyle());
+  rec.style = STYLES[(i + 1) % STYLES.length];
+  writeDay(data);
+  renderPortrait();
+});
 $("gear").addEventListener("click", () => {
   $("settings").hidden = !$("settings").hidden;
   if (!$("settings").hidden) $("apiKey").value = savedKey();
