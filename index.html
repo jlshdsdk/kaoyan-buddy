@@ -217,7 +217,7 @@ function renderPortrait() {
   const outfit = selectedOutfit();
   const img = document.createElement("img");
   img.alt = "沈晚，" + outfit.name;
-  img.src = "assets/" + outfit.file + "?v=6";
+  img.src = "assets/" + outfit.file + "?v=7";
   $("portrait").replaceChildren(img);
   $("outfit").textContent = "今天穿" + outfit.name;
   renderStyles();
