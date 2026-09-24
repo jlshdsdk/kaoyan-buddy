@@ -75,7 +75,14 @@
     cursor: pointer;
   }
   button:disabled { opacity: 0.55; cursor: default; }
-  #nextStyle { width: 100%; margin-top: 10px; min-height: 44px; background: #efe8dc; color: #241f1a; }
+  .styles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .styles button, #nextPhoto {
+    min-height: 44px;
+    background: #efe8dc;
+    color: #241f1a;
+  }
+  .styles button.on { background: #2c3848; color: #f7f4ef; }
+  #nextPhoto { width: 100%; margin-top: 8px; }
   .settings { display: grid; gap: 8px; padding: 0 14px 14px; }
   .settings label { font-size: 12px; color: #8a8176; }
   .settings input { width: 100%; border: 1px solid #e3d9cb; border-radius: 10px; padding: 8px 10px; font: inherit; }
@@ -98,7 +105,8 @@
     </div>
     <div class="portrait" id="portrait"></div>
     <p class="outfit" id="outfit"></p>
-    <button type="button" id="nextStyle">换一种风格</button>
+    <div class="styles" id="styles"></div>
+    <button type="button" id="nextPhoto">下一张</button>
     <div class="facts">
       <div class="fact">
         <label for="plan">今日安排</label>
@@ -126,7 +134,7 @@
     </div>
   </main>
 </div>
-<script src="portrait.js?v=5"></script>
+<script src="portrait.js?v=6"></script>
 <script>
 const STORE = "shenwan-buddy-v1";
 const KEY_STORE = "shenwan-api-v1";
@@ -168,28 +176,51 @@ function writeDay(data) {
   localStorage.setItem(STORE, JSON.stringify(data));
 }
 
-function defaultPick() {
-  const list = allOutfits();
+function poolByStyle(style) {
+  const pools = { campus: CAMPUS, sexy: SEXY, maid: MAID, bodysuit: BODY, uniform: UNIFORM, sport: SPORT, casual: CASUAL };
+  return pools[style] || CAMPUS;
+}
+function currentStyle() {
+  const style = readDay().rec.style;
+  return poolByStyle(style) && style ? style : "campus";
+}
+function currentPick() {
+  const list = poolByStyle(currentStyle());
+  const pick = readDay().rec.pick;
+  if (Number.isInteger(pick)) return ((pick % list.length) + list.length) % list.length;
   const parts = todayKey().split("-").map(Number);
   const days = Math.floor(Date.UTC(parts[0], parts[1] - 1, parts[2]) / 86400000);
   return ((days % list.length) + list.length) % list.length;
 }
-function currentPick() {
-  const rec = readDay().rec;
-  const list = allOutfits();
-  if (Number.isInteger(rec.pick)) return ((rec.pick % list.length) + list.length) % list.length;
-  return defaultPick();
-}
 function selectedOutfit() {
-  return allOutfits()[currentPick()];
+  return poolByStyle(currentStyle())[currentPick()];
+}
+function renderStyles() {
+  const box = $("styles");
+  box.replaceChildren();
+  [["campus", "校园"], ["sexy", "性感"], ["maid", "女仆"], ["bodysuit", "紧身"], ["uniform", "制服"], ["sport", "运动"], ["casual", "休闲"]].forEach(([id, label]) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = label;
+    if (id === currentStyle()) btn.className = "on";
+    btn.addEventListener("click", () => {
+      const { data, rec } = readDay();
+      rec.style = id;
+      rec.pick = 0;
+      writeDay(data);
+      renderPortrait();
+    });
+    box.appendChild(btn);
+  });
 }
 function renderPortrait() {
   const outfit = selectedOutfit();
   const img = document.createElement("img");
   img.alt = "沈晚，" + outfit.name;
-  img.src = "assets/" + outfit.file + "?v=5";
+  img.src = "assets/" + outfit.file + "?v=6";
   $("portrait").replaceChildren(img);
   $("outfit").textContent = "今天穿" + outfit.name;
+  renderStyles();
 }
 
 function renderFacts() {
@@ -348,9 +379,10 @@ async function sendText(text) {
   }
 }
 
-$("nextStyle").addEventListener("click", () => {
-  const list = allOutfits();
+$("nextPhoto").addEventListener("click", () => {
+  const list = poolByStyle(currentStyle());
   const { data, rec } = readDay();
+  rec.style = currentStyle();
   rec.pick = (currentPick() + 1) % list.length;
   writeDay(data);
   renderPortrait();
