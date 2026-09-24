@@ -119,7 +119,21 @@ const CAMPUS = OUTFITS.slice(0, 30).concat([
   { name: "藏青西装，格裙", file: "campus-05.png" },
   { name: "米色毛衣，棕褶裙", file: "campus-06.png" },
   { name: "白 polo，藏青裙", file: "campus-07.png" },
-  { name: "条纹衬衫，深牛仔裤", file: "campus-08.png" }
+  { name: "条纹衬衫，深牛仔裤", file: "campus-08.png" },
+  { name: "白衬衫，黑领结，深裙", file: "campus-09.png" },
+  { name: "粉开衫，灰裙", file: "campus-10.png" },
+  { name: "藏青毛衣，白领", file: "campus-11.png" },
+  { name: "黑高领，驼大衣", file: "campus-12.png" },
+  { name: "薄荷开衫，黑裙", file: "campus-13.png" },
+  { name: "白衬衫，灰开衫，黑裤", file: "campus-14.png" },
+  { name: "黑西装，灰马甲", file: "campus-15.png" },
+  { name: "淡紫毛衣，深裙", file: "campus-16.png" },
+  { name: "牛仔外套，白T，褶裙", file: "campus-17.png" },
+  { name: "红马甲，白衬衫", file: "campus-18.png" },
+  { name: "黑大衣，白高领", file: "campus-19.png" },
+  { name: "黄开衫，蓝裙", file: "campus-20.png" },
+  { name: "黑卫衣，格裙", file: "campus-21.png" },
+  { name: "白高领，藏青大衣", file: "campus-22.png" }
 ]);
 const SEXY = OUTFITS.slice(30).concat([
   { name: "红色露肩短裙", file: "sexy-01.png" },
@@ -129,7 +143,22 @@ const SEXY = OUTFITS.slice(30).concat([
   { name: "白色比基尼", file: "sexy-05.png" },
   { name: "黑色露肩短裙", file: "sexy-06.png" },
   { name: "粉色比基尼", file: "sexy-07.png" },
-  { name: "香槟色吊带短裙", file: "sexy-08.png" }
+  { name: "香槟色吊带短裙", file: "sexy-08.png" },
+  { name: "黑色抹胸短裙", file: "sexy-09.png" },
+  { name: "红色比基尼", file: "sexy-10.png" },
+  { name: "酒红露肩短裙", file: "sexy-11.png" },
+  { name: "墨绿比基尼", file: "sexy-12.png" },
+  { name: "浅蓝比基尼", file: "sexy-13.png" },
+  { name: "酒红一字肩短裙", file: "sexy-14.png" },
+  { name: "珊瑚比基尼", file: "sexy-15.png" },
+  { name: "白色吊带短裙", file: "sexy-16.png" },
+  { name: "藏蓝比基尼", file: "sexy-17.png" },
+  { name: "金色吊带短裙", file: "sexy-18.png" },
+  { name: "条纹比基尼", file: "sexy-19.png" },
+  { name: "红色吊带短裙", file: "sexy-20.png" },
+  { name: "雾紫比基尼", file: "sexy-21.png" },
+  { name: "黑色细吊带短裙", file: "sexy-22.png" },
+  { name: "白色低领短裙", file: "sexy-23.png" }
 ]);
 const MAID = [
   { name: "黑色女仆裙", file: "maid-01.png" },
@@ -139,7 +168,21 @@ const MAID = [
   { name: "短袖女仆裙", file: "maid-05.png" },
   { name: "长围裙女仆裙", file: "maid-06.png" },
   { name: "灰色女仆裙", file: "maid-07.png" },
-  { name: "荷叶边围裙女仆裙", file: "maid-08.png" }
+  { name: "荷叶边围裙女仆裙", file: "maid-08.png" },
+  { name: "短摆女仆裙", file: "maid-09.png" },
+  { name: "白衬衫黑裙围裙", file: "maid-10.png" },
+  { name: "长围裙女仆裙", file: "maid-11.png" },
+  { name: "棕色女仆裙", file: "maid-12.png" },
+  { name: "墨绿女仆裙", file: "maid-13.png" },
+  { name: "泡泡袖女仆裙", file: "maid-14.png" },
+  { name: "浅灰女仆裙", file: "maid-15.png" },
+  { name: "浅蓝围裙女仆裙", file: "maid-16.png" },
+  { name: "酒红女仆裙", file: "maid-17.png" },
+  { name: "短围裙女仆裙", file: "maid-18.png" },
+  { name: "经典黑白女仆裙", file: "maid-19.png" },
+  { name: "奶油裙黑围裙", file: "maid-20.png" },
+  { name: "藏青女仆裙", file: "maid-21.png" },
+  { name: "粉围裙女仆裙", file: "maid-22.png" }
 ];
 const BODY = [
   { name: "黑色长袖紧身衣", file: "bodysuit-01.png" },
@@ -149,7 +192,21 @@ const BODY = [
   { name: "暗红长袖紧身衣", file: "bodysuit-05.png" },
   { name: "藏蓝长袖紧身衣", file: "bodysuit-06.png" },
   { name: "棕色长袖紧身衣", file: "bodysuit-07.png" },
-  { name: "炭灰长袖紧身衣", file: "bodysuit-08.png" }
+  { name: "炭灰长袖紧身衣", file: "bodysuit-08.png" },
+  { name: "黑色高领紧身衣", file: "bodysuit-09.png" },
+  { name: "酒红长袖紧身衣", file: "bodysuit-10.png" },
+  { name: "藏青无袖紧身衣", file: "bodysuit-11.png" },
+  { name: "灰色无袖紧身衣", file: "bodysuit-12.png" },
+  { name: "橄榄长袖紧身衣", file: "bodysuit-13.png" },
+  { name: "奶油长袖紧身衣", file: "bodysuit-14.png" },
+  { name: "黑色短袖紧身衣", file: "bodysuit-15.png" },
+  { name: "藕粉长袖紧身衣", file: "bodysuit-16.png" },
+  { name: "深青长袖紧身衣", file: "bodysuit-17.png" },
+  { name: "棕色长袖紧身衣", file: "bodysuit-18.png" },
+  { name: "黑色高领连体", file: "bodysuit-19.png" },
+  { name: "沙色长袖紧身衣", file: "bodysuit-20.png" },
+  { name: "梅子色长袖紧身衣", file: "bodysuit-21.png" },
+  { name: "黑色高领紧身", file: "bodysuit-22.png" }
 ];
 const UNIFORM = [
   { name: "白衬衫，黑短裙，短外套", file: "uniform-01.png" },
@@ -168,7 +225,21 @@ const UNIFORM = [
   { name: "灰大衣，黑短裙", file: "uniform-14.png" },
   { name: "红制服外套，黑短裙", file: "uniform-15.png" },
   { name: "棕马甲制服", file: "uniform-16.png" },
-  { name: "浅蓝制服衬衫，藏青短裙", file: "uniform-17.png" }
+  { name: "浅蓝制服衬衫，藏青短裙", file: "uniform-17.png" },
+  { name: "黑制服外套，白衬衫", file: "uniform-18.png" },
+  { name: "白衬衫，藏青短裙", file: "uniform-19.png" },
+  { name: "卡其制服短裙", file: "uniform-20.png" },
+  { name: "墨绿制服短裙", file: "uniform-21.png" },
+  { name: "墨蓝制服套裙", file: "uniform-22.png" },
+  { name: "粉色制服短裙", file: "uniform-23.png" },
+  { name: "白衬衫，炭灰铅笔裙", file: "uniform-24.png" },
+  { name: "酒红制服外套", file: "uniform-25.png" },
+  { name: "灰蓝制服裙", file: "uniform-26.png" },
+  { name: "黑色制服衬衫裙", file: "uniform-27.png" },
+  { name: "驼大衣，白衬衫黑裙", file: "uniform-28.png" },
+  { name: "灰马甲白衬衫", file: "uniform-29.png" },
+  { name: "藏青短披，白衬衫", file: "uniform-30.png" },
+  { name: "酒红衬衫，黑铅笔裙", file: "uniform-31.png" }
 ];
 const SPORT = [
   { name: "黑色运动内衣，短裤", file: "sport-01.png" },
@@ -186,7 +257,22 @@ const SPORT = [
   { name: "珊瑚色运动上衣，白短裤", file: "sport-13.png" },
   { name: "黑色长袖运动上衣，短裤", file: "sport-14.png" },
   { name: "黄色运动上衣，藏青短裤", file: "sport-15.png" },
-  { name: "白色短外套，黑运动上衣", file: "sport-16.png" }
+  { name: "白色短外套，黑运动上衣", file: "sport-16.png" },
+  { name: "黑色运动内衣，灰短裤", file: "sport-17.png" },
+  { name: "蓝色短外套，白上衣", file: "sport-18.png" },
+  { name: "酒红运动上衣，黑短裤", file: "sport-19.png" },
+  { name: "白色长袖运动衣，打底裤", file: "sport-20.png" },
+  { name: "青绿运动内衣，黑短裤", file: "sport-21.png" },
+  { name: "白色运动内衣，藏青短裤", file: "sport-22.png" },
+  { name: "黑色运动背心，灰短裤", file: "sport-23.png" },
+  { name: "粉色长袖运动衣，黑短裤", file: "sport-24.png" },
+  { name: "灰色运动内衣，打底裤", file: "sport-25.png" },
+  { name: "藏青运动内衣，白短裤", file: "sport-26.png" },
+  { name: "红色运动背心，黑短裤", file: "sport-27.png" },
+  { name: "黑色运动外套，短裤", file: "sport-28.png" },
+  { name: "薄荷绿运动上衣", file: "sport-29.png" },
+  { name: "白色短卫衣，打底裤", file: "sport-30.png" },
+  { name: "紫色运动内衣，灰短裤", file: "sport-31.png" }
 ];
 const CASUAL = [
   { name: "露肩灰毛衣，牛仔短裤", file: "casual-01.png" },
@@ -205,5 +291,19 @@ const CASUAL = [
   { name: "红色短开衫，牛仔短裤", file: "casual-14.png" },
   { name: "黑色V领，浅牛仔裤", file: "casual-15.png" },
   { name: "白色短针织，黑短裙", file: "casual-16.png" },
-  { name: "藏青吊带，灰短裤", file: "casual-17.png" }
+  { name: "藏青吊带，灰短裤", file: "casual-17.png" },
+  { name: "白色露肩，黑短裤", file: "casual-18.png" },
+  { name: "棕色短开衫，短裙", file: "casual-19.png" },
+  { name: "条纹短衬衫，牛仔裤", file: "casual-20.png" },
+  { name: "紫色露肩，白短裤", file: "casual-21.png" },
+  { name: "奶油毛衣滑肩，黑牛仔裤", file: "casual-22.png" },
+  { name: "黑色吊带，浅牛仔裤", file: "casual-23.png" },
+  { name: "红色背心，黑牛仔裤", file: "casual-24.png" },
+  { name: "黑色露肩，牛仔短裙", file: "casual-25.png" },
+  { name: "白衬衫打结，黑短裤", file: "casual-26.png" },
+  { name: "灰色短毛衣，黑短裙", file: "casual-27.png" },
+  { name: "藏青露肩，白牛仔裤", file: "casual-28.png" },
+  { name: "黑色短上衣，牛仔短裤", file: "casual-29.png" },
+  { name: "浅粉吊带，灰裙", file: "casual-30.png" },
+  { name: "白色短卫衣，黑短裤", file: "casual-31.png" }
 ];
