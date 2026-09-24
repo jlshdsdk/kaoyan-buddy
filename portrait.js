@@ -113,20 +113,40 @@ function outfitForDate(dateStr, style) {
 const CAMPUS = OUTFITS.slice(0, 30).concat([
   { name: "白衬衫，藏青背心，灰褶裙", file: "campus-01.png" },
   { name: "奶油开衫，海军褶裙", file: "campus-02.png" },
-  { name: "浅蓝衬衫，卡其裤", file: "campus-03.png" }
+  { name: "浅蓝衬衫，卡其裤", file: "campus-03.png" },
+  { name: "灰卫衣，深牛仔裤", file: "campus-04.png" },
+  { name: "藏青西装，格裙", file: "campus-05.png" },
+  { name: "米色毛衣，棕褶裙", file: "campus-06.png" },
+  { name: "白 polo，藏青裙", file: "campus-07.png" },
+  { name: "条纹衬衫，深牛仔裤", file: "campus-08.png" }
 ]);
 const SEXY = OUTFITS.slice(30).concat([
   { name: "红色露肩短裙", file: "sexy-01.png" },
   { name: "黑色开叉短裙", file: "sexy-02.png" },
-  { name: "黑色比基尼", file: "sexy-03.png" }
+  { name: "黑色比基尼", file: "sexy-03.png" },
+  { name: "红色抹胸短裙", file: "sexy-04.png" },
+  { name: "白色比基尼", file: "sexy-05.png" },
+  { name: "黑色露肩短裙", file: "sexy-06.png" },
+  { name: "粉色比基尼", file: "sexy-07.png" },
+  { name: "香槟色吊带短裙", file: "sexy-08.png" }
 ]);
 const MAID = [
   { name: "黑色女仆裙", file: "maid-01.png" },
   { name: "黑裙白围裙", file: "maid-02.png" },
-  { name: "暗红女仆裙", file: "maid-03.png" }
+  { name: "暗红女仆裙", file: "maid-03.png" },
+  { name: "藏青女仆裙", file: "maid-04.png" },
+  { name: "短袖女仆裙", file: "maid-05.png" },
+  { name: "长围裙女仆裙", file: "maid-06.png" },
+  { name: "灰色女仆裙", file: "maid-07.png" },
+  { name: "荷叶边围裙女仆裙", file: "maid-08.png" }
 ];
 const BODY = [
   { name: "黑色长袖紧身衣", file: "bodysuit-01.png" },
   { name: "白色长袖紧身衣", file: "bodysuit-02.png" },
-  { name: "黑色无袖紧身衣", file: "bodysuit-03.png" }
+  { name: "黑色无袖紧身衣", file: "bodysuit-03.png" },
+  { name: "灰色长袖紧身衣", file: "bodysuit-04.png" },
+  { name: "暗红长袖紧身衣", file: "bodysuit-05.png" },
+  { name: "藏蓝长袖紧身衣", file: "bodysuit-06.png" },
+  { name: "棕色长袖紧身衣", file: "bodysuit-07.png" },
+  { name: "炭灰长袖紧身衣", file: "bodysuit-08.png" }
 ];
