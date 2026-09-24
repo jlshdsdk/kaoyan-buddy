@@ -168,7 +168,7 @@ function writeDay(data) {
   localStorage.setItem(STORE, JSON.stringify(data));
 }
 
-const STYLES = ["campus", "sexy", "maid", "bodysuit"];
+const STYLES = ["campus", "sexy", "maid", "bodysuit", "uniform", "sport", "casual"];
 function currentStyle() {
   const rec = readDay().rec;
   return STYLES.indexOf(rec.style) >= 0 ? rec.style : "campus";
