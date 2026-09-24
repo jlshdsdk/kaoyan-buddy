@@ -75,7 +75,7 @@
     cursor: pointer;
   }
   button:disabled { opacity: 0.55; cursor: default; }
-  #nextStyle { width: 100%; margin-top: 10px; background: #efe8dc; color: #241f1a; }
+  #nextStyle { width: 100%; margin-top: 10px; min-height: 44px; background: #efe8dc; color: #241f1a; }
   .settings { display: grid; gap: 8px; padding: 0 14px 14px; }
   .settings label { font-size: 12px; color: #8a8176; }
   .settings input { width: 100%; border: 1px solid #e3d9cb; border-radius: 10px; padding: 8px 10px; font: inherit; }
@@ -126,7 +126,7 @@
     </div>
   </main>
 </div>
-<script src="portrait.js"></script>
+<script src="portrait.js?v=5"></script>
 <script>
 const STORE = "shenwan-buddy-v1";
 const KEY_STORE = "shenwan-api-v1";
@@ -168,18 +168,28 @@ function writeDay(data) {
   localStorage.setItem(STORE, JSON.stringify(data));
 }
 
-const STYLES = ["campus", "sexy", "maid", "bodysuit", "uniform", "sport", "casual"];
-function currentStyle() {
+function defaultPick() {
+  const list = allOutfits();
+  const parts = todayKey().split("-").map(Number);
+  const days = Math.floor(Date.UTC(parts[0], parts[1] - 1, parts[2]) / 86400000);
+  return ((days % list.length) + list.length) % list.length;
+}
+function currentPick() {
   const rec = readDay().rec;
-  return STYLES.indexOf(rec.style) >= 0 ? rec.style : "campus";
+  const list = allOutfits();
+  if (Number.isInteger(rec.pick)) return ((rec.pick % list.length) + list.length) % list.length;
+  return defaultPick();
+}
+function selectedOutfit() {
+  return allOutfits()[currentPick()];
 }
 function renderPortrait() {
-  const picked = outfitForDate(todayKey(), currentStyle());
+  const outfit = selectedOutfit();
   const img = document.createElement("img");
-  img.alt = "沈晚，" + picked.outfit.name;
-  img.src = "assets/" + picked.outfit.file;
+  img.alt = "沈晚，" + outfit.name;
+  img.src = "assets/" + outfit.file + "?v=5";
   $("portrait").replaceChildren(img);
-  $("outfit").textContent = "今天穿" + picked.outfit.name;
+  $("outfit").textContent = "今天穿" + outfit.name;
 }
 
 function renderFacts() {
@@ -304,13 +314,13 @@ async function sendText(text) {
   setHint("她在想怎么回……");
   try {
     const fresh = readDay().rec;
-    const picked = outfitForDate(todayKey(), currentStyle());
+    const picked = selectedOutfit();
     const context = {
       now: new Date().toLocaleString("zh-CN", { hour12: false }),
       night: isNight(),
       plan: fresh.plan,
       progress: fresh.progress,
-      outfit: picked.outfit.name
+      outfit: picked.name
     };
     let reply = "";
     if (LOCAL) {
@@ -339,9 +349,9 @@ async function sendText(text) {
 }
 
 $("nextStyle").addEventListener("click", () => {
+  const list = allOutfits();
   const { data, rec } = readDay();
-  const i = STYLES.indexOf(currentStyle());
-  rec.style = STYLES[(i + 1) % STYLES.length];
+  rec.pick = (currentPick() + 1) % list.length;
   writeDay(data);
   renderPortrait();
 });

@@ -111,6 +111,19 @@ function outfitForDate(dateStr, style) {
   return { index, outfit: pool[index] };
 }
 
+function allOutfits() {
+  const seen = {};
+  const list = [];
+  [CAMPUS, SEXY, MAID, BODY, UNIFORM, SPORT, CASUAL].forEach((pool) => {
+    pool.forEach((item) => {
+      if (!item || !item.file || seen[item.file]) return;
+      seen[item.file] = true;
+      list.push(item);
+    });
+  });
+  return list;
+}
+
 const CAMPUS = OUTFITS.slice(0, 30).concat([
   { name: "白衬衫，藏青背心，灰褶裙", file: "campus-01.png" },
   { name: "奶油开衫，海军褶裙", file: "campus-02.png" },
