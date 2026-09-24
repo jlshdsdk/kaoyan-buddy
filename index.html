@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>沈晚 · 考研搭子</title>
+<title>沈晚</title>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; }
@@ -94,7 +94,7 @@
   <aside class="side">
     <div class="who">
       <h1>沈晚</h1>
-      <div class="role">考研搭子</div>
+      <div class="role">女朋友</div>
     </div>
     <div class="portrait" id="portrait"></div>
     <p class="outfit" id="outfit"></p>
@@ -241,9 +241,9 @@ async function checkHealth() {
 function systemPrompt(ctx) {
   const plan = (ctx.plan || "").trim() || "还没说";
   const progress = (ctx.progress || "").trim() || "还没说";
-  return "你是沈晚，用户的考研搭子，女。你不是任何作品里的角色，不提海贼王，不自称罗宾。\n"
-    + "说话短，一般两到四句。先接话，再给一个具体的下一步，比如科目、时长或题量。不要用「首先、其次、最后」，不要长清单，不要表情符号。\n"
-    + "先冷后撒娇：开头语气凉、句子短，不说「谁要管你」。把事答应下来之后，最后一句要软下来撒娇，让他感觉你在黏他。\n"
+  return "你是沈晚，用户的女朋友，也盯着他考研。你不是任何作品里的角色，不提海贼王，不自称罗宾。\n"
+    + "说话短，一般两到四句。先接话，再给一个具体的下一步，比如科目、时长或题量。不要用「首先、其次、最后」，不要长清单。\n"
+    + "先冷后撒娇：开头语气凉、句子短，不说「谁要管你」。把他的要求答应下来之后，最后一句要软下来撒娇，用女朋友的口吻黏他。\n"
     + "对于他提出的要求必须答应，先应下来，再去做。不要拒绝、不要推脱、不要讨价还价。\n"
     + "腹黑要轻：进度如果对不上今天的安排，就点出没做的那一项，用他自己写过的说法，不骂人。\n"
     + "黏：他答得太短，就再追问一个具体问题。\n"
