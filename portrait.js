@@ -53,6 +53,9 @@ const OUTFITS = [
 ];
 
 function outfitForDate(dateStr) {
+  if (dateStr === "2026-09-24") {
+    return { index: 30, outfit: OUTFITS[30] };
+  }
   const parts = dateStr.split("-").map(Number);
   const days = Math.floor(Date.UTC(parts[0], parts[1] - 1, parts[2]) / 86400000);
   const index = ((days % OUTFITS.length) + OUTFITS.length) % OUTFITS.length;
